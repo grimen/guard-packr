@@ -1,0 +1,13 @@
+# Guard::Packr
+guard 'packr', :extension => '.packed.js', :shrink_vars => true, :private => true, :base62 => false, :protect => %w[_this that] do
+  # == IMPORTANT:
+  #
+  #   - Ensure that you don't write rules that owerwrite your source files!
+  #     To avoid that either use custom "extension" (see above), or temporarily
+  #     generated files as source (e.g. app/assets/javascripts => tmp/javascripts).
+  #
+  #   - This guard should be placed after any javascript processing (guard-sprockets, guard-jammit, etc.)
+  #     within your Guardfile - naturally (Packr makes no sense for pre-processing javascript).
+  #
+  # watch('tmp/javascripts/.*\.js')
+end

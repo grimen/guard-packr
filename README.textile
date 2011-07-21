@@ -1,0 +1,72 @@
+h1. GUARD-PACKR *alpha*
+
+_Guard::Packr automatically compresses/obfuscates javascript files when modified (using Guard + Packr)._
+
+h2. Installation
+
+Add to your @Gemfile@:
+
+<pre>
+  gem 'guard-packr'
+</pre>
+
+...and @bundle install@.
+
+*Dependencies:*
+
+* *"guard":http://github.com/guard/guard*
+* *"packr":http://github.com/jcoglan/packr*
+
+...you will need, but installed by *Bundler* they will be. - Yoda
+
+h2. Setup
+
+Use the *Guard* generator:
+
+<pre>
+  $ guard init packr
+</pre>
+
+...to generate default *Packr*-guard (with notes) into your @Guardfile@
+
+h2. Usage
+
+In your @Guardfile@, something like:
+
+<pre>
+  guard 'packr', :extension => '.packed.js', :shrink_vars => true, :private => true, :base62 => false, :protect => %w[_this that] do
+    # == IMPORTANT:
+    #
+    #   - Ensure that you don't write rules that owerwrite your source files!
+    #     To avoid that either use custom "extension" (see above), or temporarily
+    #     generated files as source (e.g. app/assets/javascripts => tmp/javascripts).
+    #
+    #   - This guard should be placed after any javascript processing (guard-sprockets, guard-jammit, etc.)
+    #     within your Guardfile - naturally (Packr makes no sense for pre-processing javascript).
+    #
+    watch('tmp/javascripts/.*\.js')
+  end
+</pre>
+
+To read more about the *Packr*-options, see "Packr":https://github.com/jcoglan/packr.
+
+When in doubt, see "Guard":https://github.com/guard/guard.
+
+h2. Options
+
+<pre>
+  :extension    => '.packed.js'     # File-extension for the packed javascript file.
+  :shrink_vars  => true,            # Compress local variable names.
+  :private      => true,            # Obfuscate 'private' identifiers, i.e. names beginning with a single underscore.
+  :base62       => false,           # Encode the program using base 62.
+  :protect      => %w[_this that]   # Variable names to protect from compression.
+</pre>
+
+h2. Notes
+
+This gem was developed for a tiny special case at *"Merchii":http://github.com/merchii*, so feel free to send pull-requests with enhancements of any kind (features, bug-fixes, documentation, tests, etc.) to make it better or useful for you as well.
+
+h2. License
+
+Released under the MIT license.
+Copyright (c) "Merchii":http://github.com/merchii, "Jonas Grimfelt":http://github.com/grimen
